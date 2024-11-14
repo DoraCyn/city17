@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City17</title>
+</head>
+<body>
+    <h1>City17</h1>
+    <form method="post" onsubmit="return checkText()"> 
+        <input type="text" id="text" placeholder="text">
+        <input type="submit">
+    </form>
+
+
+    <script>
+//используй этот скрипт при отправке формы при помощи так называемого onsubmit который должен возвращать функцию в js 
+    let isFormBlocked = false; 
+
+    function formlock() {
+        // Удаляем элемент
+        let inputForm = document.getElementById('text');
+        if (inputForm) {
+            inputForm.remove();
+        }
+
+        setTimeout(() => {
+            isFormBlocked = false; 
+        }, 5000);
+
+        localStorage.removeItem('Naryh'); 
+    }
+
+    function checkText() {
+        if (isFormBlocked) {
+            return false; 
+        }
+
+        let text = document.getElementById('text').value;
+
+
+        let Naryh = parseInt(localStorage.getItem('Naryh')) || 0;
+
+        if (text.toLowerCase() === 'бля' || text.toLowerCase() === 'сука' || text.toLowerCase() === 'хуй') {
+
+            Naryh++;
+            localStorage.setItem('Naryh', Naryh);
+
+            if (Naryh === 1) {
+                let myAudioElement = new Audio();
+                myAudioElement.src = 'anti.ogg';
+                myAudioElement.play();
+            }
+
+            if (Naryh === 2) {
+                let myAudioElement = new Audio();
+                myAudioElement.src = '2.ogg';
+                myAudioElement.play();
+            }
+
+            if (Naryh === 3) {
+                let myAudioElement = new Audio();
+                myAudioElement.src = 'uber.ogg';
+                myAudioElement.play();
+
+                alert('Временно отключены');
+                isFormBlocked = true; 
+                formlock(); 
+            }
+
+            return false; // Предотвращаем отправку формы
+        }
+
+        return true; // Разрешаем отправку формы
+    }
+    </script>
+</body>
+</html>
